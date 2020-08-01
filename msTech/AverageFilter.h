@@ -5,13 +5,13 @@
 #define MS_TECH_AVERAGE_FILTER_H
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-template <typename T, int N, T zero>
+template <class T, int N>
 class CAverageFilter
 {
 public:
 	CAverageFilter();
 	void    Add( T value );
-    T    	Calc();
+    T    	Calc( const T zero );
 
 private:
 	T       m_ringBuffer[N];
@@ -19,14 +19,14 @@ private:
     int		m_count;
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-template<typename T, int N, T zero>
-CAverageFilter< T, N, zero >::CAverageFilter() :
+template<class T, int N>
+CAverageFilter< T, N>::CAverageFilter() :
     m_ringPos( 0 ),
     m_count( 0 )
 {}
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-template<typename T, int N, T zero>
-void CAverageFilter< T, N, zero >::Add( T value )
+template<class T, int N>
+void CAverageFilter< T, N>::Add( T value )
 {
     m_ringBuffer[m_ringPos] = value;
     ++m_ringPos;
@@ -35,8 +35,8 @@ void CAverageFilter< T, N, zero >::Add( T value )
     	++m_count;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-template<typename T, int N, T zero>
-T CAverageFilter< T, N, zero >::Calc()
+template<class T, int N>
+T CAverageFilter< T, N>::Calc(const T zero)
 {
 	if( 0 == m_count )
 		return zero;
